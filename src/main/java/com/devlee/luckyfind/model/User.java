@@ -2,7 +2,6 @@ package com.devlee.luckyfind.model;
 
 import com.devlee.luckyfind.entity.UserEntity;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 
 @Getter
 @Setter
@@ -16,8 +15,14 @@ public class User {
     private String password;
     private String email;
 
-    public User(UserEntity userEntity) {
-        BeanUtils.copyProperties(userEntity, this);
+    public static User entityToDto(UserEntity userEntity) {
+        return new User(userEntity);
     }
 
+    public User(UserEntity userEntity) {
+        this.email = userEntity.getEmail();
+        this.id = userEntity.getId();
+        this.password = userEntity.getPassword();
+        this.username = userEntity.getUsername();
+    }
 }
