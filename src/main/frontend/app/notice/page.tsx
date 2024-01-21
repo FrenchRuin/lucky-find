@@ -1,8 +1,18 @@
-import NavBar from '@/components/NavBar'
-import Link from 'next/link'
-import NoticeTable from './[components]/notice-table'
+'use client'
 
-const page = () => {
+import NavBar from '@/components/NavBar'
+import NoticeTable from './[components]/notice-table'
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogTrigger,
+	DialogHeader,
+	DialogTitle
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+
+const NoticePage = () => {
 	return (
 		<div>
 			<NavBar />
@@ -12,12 +22,11 @@ const page = () => {
 					You should know what you are looking for!
 				</div>
 			</div>
-			<div className="bg-white py-24 sm:py-32">
+			<div className="bg-white py-24 sm:py-20">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">
-					<dl className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-1">
-						<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-							<NoticeTable />
-						</div>
+					<dl className="grid grid-cols-1 gap-x-8 gap-y-2 text-center lg:grid-cols-1">
+						<div className="flex"></div>
+						<NoticeTable />
 					</dl>
 				</div>
 			</div>
@@ -25,4 +34,4 @@ const page = () => {
 	)
 }
 
-export default page
+export default NoticePage

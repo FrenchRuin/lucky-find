@@ -4,10 +4,13 @@ import com.devlee.luckyfind.model.Notice;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Getter
 @Entity
 @Table(name = "notice")
-public class NoticeEntity {
+public class NoticeEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

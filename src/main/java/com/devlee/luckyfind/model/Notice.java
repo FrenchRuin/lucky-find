@@ -3,6 +3,9 @@ package com.devlee.luckyfind.model;
 import com.devlee.luckyfind.entity.NoticeEntity;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,10 +19,6 @@ public class Notice {
     private String category;
     private String username;
 
-    public static Notice entityToDto(NoticeEntity noticeEntity) {
-        return new Notice(noticeEntity);
-    }
-
     public Notice(NoticeEntity noticeEntity) {
         this.id = noticeEntity.getId();
         this.username = noticeEntity.getUsername();
@@ -27,5 +26,4 @@ public class Notice {
         this.title = noticeEntity.getTitle();
         this.category = noticeEntity.getCategory();
     }
-
 }

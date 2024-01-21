@@ -20,7 +20,7 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public List<Notice> getAllNotices() {
         List<NoticeEntity> noticeEntityList = noticeRepository.findAll();
-        return noticeEntityList.stream().map(Notice::entityToDto).toList();
+        return noticeEntityList.stream().map(Notice::new).toList();
     }
 
     @Override
