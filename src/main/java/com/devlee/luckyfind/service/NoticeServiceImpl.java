@@ -1,12 +1,11 @@
 package com.devlee.luckyfind.service;
 
 import com.devlee.luckyfind.entity.NoticeEntity;
-import com.devlee.luckyfind.model.Notice;
+import com.devlee.luckyfind.model.NoticeDto;
 import com.devlee.luckyfind.repository.NoticeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -18,16 +17,20 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<Notice> getAllNotices() {
+    public List<NoticeDto> getAllNotices() {
         List<NoticeEntity> noticeEntityList = noticeRepository.findAll();
-        return noticeEntityList.stream().map(Notice::new).toList();
+        return noticeEntityList.stream().map(NoticeDto::new).toList();
     }
 
     @Override
-    public Notice createNotice(Notice notice) {
-        NoticeEntity noticeEntity = new NoticeEntity();
-        noticeEntity.entityToDto(notice);
+    public NoticeDto createNotice(NoticeDto noticeDto) {
+        NoticeEntity noticeEntity = new NoticeEntity(noticeDto);
         noticeRepository.save(noticeEntity);
-        return notice;
+        return noticeDto;
+    }
+
+    @Override
+    public void deleteNotice(Long id) {
+        noticeRepository.deleteById(id);
     }
 }

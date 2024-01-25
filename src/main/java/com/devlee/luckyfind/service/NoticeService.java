@@ -1,11 +1,13 @@
 package com.devlee.luckyfind.service;
 
-import com.devlee.luckyfind.model.Notice;
+import com.devlee.luckyfind.model.NoticeDto;
 
 import java.util.List;
 
 public interface NoticeService {
-    List<Notice> getAllNotices();
+    List<NoticeDto> getAllNotices();
 
-    Notice createNotice(Notice notice);
+    NoticeDto createNotice(NoticeDto noticeDto);
+
+    void deleteNotice(Long id);
 }

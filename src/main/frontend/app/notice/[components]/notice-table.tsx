@@ -24,7 +24,10 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import React, { useEffect, useRef, useState } from 'react'
-interface notice {
+import NoticeForm from './notice-form'
+import NoticeDeleteButton from './notice-delete-button'
+
+interface NoticeDtoProps {
 	id: string
 	title: string
 	contents: string
@@ -35,78 +38,65 @@ interface notice {
 
 const NoticeTable = () => {
 	// useState
-	const [noticeList, setNoticeList] = useState<notice[] | undefined>()
+	const [noticeList, setNoticeList] = useState<NoticeDtoProps[] | undefined>()
 
 	const [mounted, setMounted] = useState<boolean>(false)
-
-	const titleRef = useRef<HTMLInputElement>(null)
-	const contentRef = useRef<HTMLTextAreaElement>(null)
+	const [isOpen, setIsOpen] = useState<boolean>(false)
+	const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false)
 
 	useEffect(() => {
 		setMounted(true)
+		getNoticeList()
 	}, [])
 
-	async function onSubmit() {
-		const title = titleRef.current?.value as string
-		const content = contentRef.current?.value as string
-		console.log(title)
-		console.log(content)
+	async function onSubmit(noticeDto: NoticeDtoProps) {
+		const { title, contents, category, username } = noticeDto
 
-		const response = await fetch('http://localhost:8080/api/v1/notices', {
+		await fetch('http://localhost:8080/api/v1/notices', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
 				title,
-				content
+				contents,
+				category,
+				username
 			})
 		})
-
-		const data = await response.json()
-		setNoticeList(data)
-
-		console.log(response)
+		getNoticeList()
+		setIsOpen(false)
 	}
 
-	// get Notice List
-	useEffect(() => {
-		const fetchData = async () => {
-			const response = await fetch('http://localhost:8080/api/v1/notices', {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			})
-			const data = await response.json()
-			setNoticeList(data)
-			console.log(data)
-		}
-		fetchData()
-	}, [])
+	const getNoticeList = async () => {
+		const response = await fetch('http://localhost:8080/api/v1/notices', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		const data = await response.json()
+		setNoticeList(data)
+	}
 
-	function onDelete(id: string) {
-		// const fetchData = async () => {
-		// 	const response = await fetch(`http://localhost:8080/api/v1/notices/${id}`, {
-		// 		method: 'DELETE',
-		// 		headers: {
-		// 			'Content-Type': 'application/json'
-		// 		}
-		// 	})
-		// 	const data = await response.json()
-		// 	setNoticeList(data)
-		// 	console.log(data)
-		// }
-		console.log(id)
+	async function onDelete(id: string) {
+		await fetch(`http://localhost:8080/api/v1/notices/${id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+
+		getNoticeList()
 	}
 
 	return (
 		<>
-			<Dialog>
+			<Dialog open={isOpen} onOpenChange={setIsOpen}>
 				<DialogTrigger asChild>
 					<Button
 						variant={'ghost'}
-						className="border  hover:bg-gray-700 hover:text-white transition-all"
+						className="border  hover:bg-gray-700 hover:text-white transition-all w-[100px]"
 					>
 						Add Notice
 					</Button>
@@ -116,58 +106,7 @@ const NoticeTable = () => {
 						<DialogTitle>Notice Add</DialogTitle>
 						<DialogDescription>You should Write All contents</DialogDescription>
 					</DialogHeader>
-					<div className="grid gap-3 py-4">
-						<div className="grid grid-cols-6 items-center gap-4">
-							<Label htmlFor="title" className="text-right ">
-								Title
-							</Label>
-							<Input ref={titleRef} placeholder="title" className="col-span-5" />
-						</div>
-						<div className="grid grid-cols-6 items-center gap-4">
-							<Label htmlFor="contents" className="text-right ">
-								Contents
-							</Label>
-							<Textarea
-								className="col-span-5"
-								id="contents"
-								placeholder="Please write contents"
-								ref={contentRef}
-							/>
-						</div>
-						<div className="grid grid-cols-6 items-center gap-4">
-							<Label htmlFor="category" className="text-right ">
-								Category
-							</Label>
-							<Select name="category">
-								<SelectTrigger className="col-span-5">
-									<SelectValue placeholder="Select a Category" />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectGroup>
-										<SelectLabel>Category</SelectLabel>
-										<SelectItem value="notice">Notice</SelectItem>
-										<SelectItem value="info">Info</SelectItem>
-									</SelectGroup>
-								</SelectContent>
-							</Select>
-						</div>
-					</div>
-					<DialogFooter>
-						<DialogClose asChild>
-							<div>
-								<Button variant={'outline'} className=" text-black">
-									Cancel
-								</Button>
-							</div>
-						</DialogClose>
-						<Button
-							variant={'outline'}
-							className="bg-black text-white hover:text-black transition-all"
-							onClick={onSubmit}
-						>
-							Confirm
-						</Button>
-					</DialogFooter>
+					<NoticeForm onSubmit={onSubmit} />
 				</DialogContent>
 			</Dialog>
 			<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -192,38 +131,34 @@ const NoticeTable = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{noticeList?.map((notice) => (
+						{noticeList?.map((noticeDto, index) => (
 							<tr
 								className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-								key={notice.id}
+								key={noticeDto.id}
 							>
 								<th
 									scope="row"
 									className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 								>
-									{notice.id}
+									{index + 1}
 								</th>
 								<th
 									scope="row"
 									className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 								>
-									{notice.title}
+									{noticeDto.title}
 								</th>
-								<td className="px-6 py-4">{notice.category}</td>
-								<td className="px-6 py-4">{notice.username}</td>
+								<td className="px-6 py-4">{noticeDto.category}</td>
+								<td className="px-6 py-4">{noticeDto.username}</td>
 								<td className="px-6 py-4  text-right ">
 									<Button variant={'ghost'} className="h-auto bg-sky-100 text-black mr-2">
 										Edit
 									</Button>
-									<Button
-										variant={'ghost'}
-										className="h-auto bg-rose-400 text-black"
-										onClick={() => {
-											onDelete(notice.id)
+									<NoticeDeleteButton
+										onDelete={() => {
+											onDelete(noticeDto.id)
 										}}
-									>
-										Del
-									</Button>
+									/>
 								</td>
 							</tr>
 						))}

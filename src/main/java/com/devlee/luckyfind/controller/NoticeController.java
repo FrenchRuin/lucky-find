@@ -1,6 +1,6 @@
 package com.devlee.luckyfind.controller;
 
-import com.devlee.luckyfind.model.Notice;
+import com.devlee.luckyfind.model.NoticeDto;
 import com.devlee.luckyfind.service.NoticeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +18,17 @@ public class NoticeController {
     }
 
     @GetMapping("/notices")
-    public List<Notice> getAllNotices() {
+    public List<NoticeDto> getAllNotices() {
         return noticeService.getAllNotices();
     }
 
     @PostMapping("/notices")
-    public Notice createNotice(@RequestBody Notice notice) {
-        return noticeService.createNotice(notice);
+    public NoticeDto createNotice(@RequestBody NoticeDto noticeDto) {
+        return noticeService.createNotice(noticeDto);
+    }
+
+    @DeleteMapping("/notices/{id}")
+    public void deleteNotice(@PathVariable Long id) {
+        noticeService.deleteNotice(id);
     }
 }

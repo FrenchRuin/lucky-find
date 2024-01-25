@@ -1,11 +1,9 @@
 package com.devlee.luckyfind.entity;
 
-import com.devlee.luckyfind.model.Notice;
+import com.devlee.luckyfind.enums.NoticeCategory;
+import com.devlee.luckyfind.model.NoticeDto;
 import jakarta.persistence.*;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Getter
 @Entity
@@ -16,16 +14,26 @@ public class NoticeEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String category;
+
+    @Enumerated(EnumType.STRING)
+    private NoticeCategory category;
+
     private String content;
     private String username;
 
-    public void entityToDto(Notice notice) {
-        this.id = notice.getId();
-        this.title = notice.getTitle();
-        this.category = notice.getCategory();
-        this.content = notice.getContent();
-        this.username = notice.getUsername();
+    public NoticeEntity() {
+
     }
+
+    public NoticeEntity(NoticeDto noticeDto){
+        this.id = noticeDto.getId();
+        this.title = noticeDto.getTitle();
+        this.category = NoticeCategory.valueOf(String.valueOf(noticeDto.getCategory()).toUpperCase());
+        this.content = noticeDto.getContent();
+        this.username = noticeDto.getUsername();
+    }
+
+
+
 
 }
