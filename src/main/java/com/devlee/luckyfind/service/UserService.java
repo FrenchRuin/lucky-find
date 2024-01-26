@@ -1,10 +1,12 @@
 package com.devlee.luckyfind.service;
 
-import com.devlee.luckyfind.model.User;
+import com.devlee.luckyfind.model.UserDto;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> getAllUsers();
+    List<UserDto> getAllUsers();
+
+    UserDto createUser(UserDto userDto);
 }

@@ -1,11 +1,14 @@
 package com.devlee.luckyfind.entity;
 
-import com.devlee.luckyfind.model.User;
+import com.devlee.luckyfind.model.UserDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -16,6 +19,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @Column
@@ -27,8 +31,13 @@ public class UserEntity {
     @Column
     private String email;
 
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<NoticeEntity> notices = new ArrayList<>();
+
+
     @Builder
-    private UserEntity(Long id, String username, String password, String email) {
+    public UserEntity(Long id, String username, String password, String email) {
         this.id = id;
         this.username = username;
         this.password = password;

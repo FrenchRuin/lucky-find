@@ -8,18 +8,14 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class User {
+public class UserDto {
 
     private Long id;
     private String username;
     private String password;
     private String email;
 
-    public static User entityToDto(UserEntity userEntity) {
-        return new User(userEntity);
-    }
-
-    public User(UserEntity userEntity) {
+    public UserDto(UserEntity userEntity) {
         this.email = userEntity.getEmail();
         this.id = userEntity.getId();
         this.password = userEntity.getPassword();
