@@ -25,7 +25,7 @@ import * as z from 'zod'
 
 const formSchema = z.object({
 	title: z.string().min(10),
-	contents: z.string(),
+	content: z.string(),
 	category: z.string(),
 	username: z.string()
 })
@@ -35,7 +35,7 @@ const NoticeForm = ({ onSubmit }: { onSubmit: Function }) => {
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			title: '',
-			contents: '',
+			content: '',
 			category: '',
 			username: ''
 		}
@@ -56,7 +56,7 @@ const NoticeForm = ({ onSubmit }: { onSubmit: Function }) => {
 				)}
 			/>
 			<FormField
-				name="contents"
+				name="content"
 				control={form.control}
 				render={({ field }) => (
 					<FormItem>
@@ -95,7 +95,7 @@ const NoticeForm = ({ onSubmit }: { onSubmit: Function }) => {
 				onClick={() => {
 					onSubmit({
 						title: form.watch('title') as string,
-						contents: form.watch('contents') as string,
+						content: form.watch('content') as string,
 						category: form.watch('category') as string,
 						username: form.watch('username') as string
 					})

@@ -11,7 +11,6 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
-import { boolean } from 'zod'
 import { Button } from '@/components/ui/button'
 
 interface NoticeDeleteButtonProps {
@@ -24,13 +23,13 @@ const NoticeDeleteButton = ({ onDelete }: NoticeDeleteButtonProps) => {
 			<AlertDialog>
 				<AlertDialogTrigger asChild>
 					<Button variant={'ghost'} className="h-auto bg-rose-400 text-black">
-						Del
+						Delete
 					</Button>
 				</AlertDialogTrigger>
 				<AlertDialogContent>
 					<AlertDialogHeader>
 						<AlertDialogTitle>Alert</AlertDialogTitle>
-						<AlertDialogDescription>삭제하시실건가요??</AlertDialogDescription>
+						<AlertDialogDescription>삭제하시겠습니까?</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel>Cancel</AlertDialogCancel>

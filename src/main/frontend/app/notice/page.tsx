@@ -15,12 +15,13 @@ import { Button } from '@/components/ui/button'
 const NoticePage = () => {
 	return (
 		<div>
-			<NavBar />
 			<div className="flex justify-center mt-20">
 				<div className="text-3xl px-8 py-8 font-bold rounded-lg uppercase">공지사항 💡</div>
 			</div>
 			<div className="flex justify-center ">
-				<div className="text-xl px-8  rounded-lg  ">간단한 공지사항을 등록해보세요!</div>
+				<div className="text-xl px-8  rounded-lg">
+					서비스를 이용하면서 알아야할 공지사항 이에요!
+				</div>
 			</div>
 			<div className="bg-white py-24 sm:py-20">
 				<div className="mx-auto max-w-7xl px-6 lg:px-8">

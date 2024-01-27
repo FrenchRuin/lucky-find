@@ -3,34 +3,22 @@
 import { Button } from '@/components/ui/button'
 import {
 	Dialog,
-	DialogClose,
 	DialogContent,
 	DialogDescription,
-	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger
 } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue
-} from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
-import React, { useEffect, useRef, useState } from 'react'
-import NoticeForm from './notice-form'
-import NoticeDeleteButton from './notice-delete-button'
 
-interface NoticeDtoProps {
+import React, { useEffect, useState } from 'react'
+import NoticeForm from './notice-form'
+import NoticeInfo from './notice-Info'
+import { toast } from 'sonner'
+
+export interface NoticeDtoProps {
 	id: string
 	title: string
-	contents: string
+	content: string
 	category: string
 	username: string
 	createdAt: string
@@ -42,7 +30,6 @@ const NoticeTable = () => {
 
 	const [mounted, setMounted] = useState<boolean>(false)
 	const [isOpen, setIsOpen] = useState<boolean>(false)
-	const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false)
 
 	useEffect(() => {
 		setMounted(true)
@@ -50,7 +37,7 @@ const NoticeTable = () => {
 	}, [])
 
 	async function onSubmit(noticeDto: NoticeDtoProps) {
-		const { title, contents, category, username } = noticeDto
+		const { title, content, category, username } = noticeDto
 
 		await fetch('http://localhost:8080/api/v1/notices', {
 			method: 'POST',
@@ -59,11 +46,14 @@ const NoticeTable = () => {
 			},
 			body: JSON.stringify({
 				title,
-				contents,
+				content,
 				category,
 				username
 			})
 		})
+
+		toast.info('공지사항이 등록되었습니다.')
+
 		getNoticeList()
 		setIsOpen(false)
 	}
@@ -79,17 +69,6 @@ const NoticeTable = () => {
 		setNoticeList(data)
 	}
 
-	async function onDelete(id: string) {
-		await fetch(`http://localhost:8080/api/v1/notices/${id}`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-
-		getNoticeList()
-	}
-
 	return (
 		<>
 			<Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -98,7 +77,7 @@ const NoticeTable = () => {
 						variant={'ghost'}
 						className="border  hover:bg-gray-700 hover:text-white transition-all w-[100px]"
 					>
-						Add Notice
+						Add +
 					</Button>
 				</DialogTrigger>
 				<DialogContent>
@@ -125,9 +104,6 @@ const NoticeTable = () => {
 							<th scope="col" className="px-6 py-3">
 								Writer
 							</th>
-							<th scope="col" className="px-6 py-3">
-								<span className="sr-only">Edit</span>
-							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -146,20 +122,14 @@ const NoticeTable = () => {
 									scope="row"
 									className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 								>
-									{noticeDto.title}
+									<NoticeInfo
+										id={noticeDto.id}
+										data={noticeDto}
+										getNoticeList={getNoticeList}
+									></NoticeInfo>
 								</th>
 								<td className="px-6 py-4">{noticeDto.category}</td>
 								<td className="px-6 py-4">{noticeDto.username}</td>
-								<td className="px-6 py-4  text-right ">
-									<Button variant={'ghost'} className="h-auto bg-sky-100 text-black mr-2">
-										Edit
-									</Button>
-									<NoticeDeleteButton
-										onDelete={() => {
-											onDelete(noticeDto.id)
-										}}
-									/>
-								</td>
 							</tr>
 						))}
 					</tbody>
