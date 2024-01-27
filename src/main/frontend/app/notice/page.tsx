@@ -1,7 +1,7 @@
 'use client'
 
 import NavBar from '@/components/NavBar'
-import NoticeTable from './[components]/notice-table'
+import NoticeTable from './_components/notice-table'
 import {
 	Dialog,
 	DialogContent,
@@ -14,23 +14,12 @@ import { Button } from '@/components/ui/button'
 
 const NoticePage = () => {
 	return (
-		<div>
-			<div className="flex justify-center mt-20">
-				<div className="text-3xl px-8 py-8 font-bold rounded-lg uppercase">공지사항 💡</div>
+		<div className="grid grid-cols-1 items-center px-96 space-y-2">
+			<div className="pt-8">
+				<h4 className="text-3xl font-bold rounded-lg uppercase ">Team Recuirt Service</h4>
+				<p className="text-sm text-muted-foreground">다양한 사이드 프로젝트를 지원합니다. </p>
 			</div>
-			<div className="flex justify-center ">
-				<div className="text-xl px-8  rounded-lg">
-					서비스를 이용하면서 알아야할 공지사항 이에요!
-				</div>
-			</div>
-			<div className="bg-white py-24 sm:py-20">
-				<div className="mx-auto max-w-7xl px-6 lg:px-8">
-					<dl className="grid grid-cols-1 gap-x-8 gap-y-2 text-center lg:grid-cols-1">
-						<div className="flex"></div>
-						<NoticeTable />
-					</dl>
-				</div>
-			</div>
+			<NoticeTable />
 		</div>
 	)
 }

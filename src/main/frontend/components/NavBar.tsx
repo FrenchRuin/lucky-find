@@ -13,11 +13,6 @@ const NavBar = () => {
 								<Link href={'/'}>
 									<div className=" text-white rounded-md  py-2 text-sm font-medium">Lucky Find</div>
 								</Link>
-								<Link href={'/notice'}>
-									<div className=" text-black rounded-md px-3 py-2 text-sm font-medium hover:bg-indigo-700 hover:text-white transition-all">
-										Notice
-									</div>
-								</Link>
 							</div>
 						</div>
 					</div>

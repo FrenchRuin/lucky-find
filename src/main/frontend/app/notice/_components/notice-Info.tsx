@@ -30,7 +30,6 @@ const NoticeInfo = ({ data, getNoticeList }: NoticeInfoProps) => {
 				'Content-Type': 'application/json'
 			}
 		})
-
 		setIsOpen(false)
 		getNoticeList()
 	}
@@ -38,7 +37,7 @@ const NoticeInfo = ({ data, getNoticeList }: NoticeInfoProps) => {
 	return (
 		<div>
 			<Drawer open={isOpen} onOpenChange={setIsOpen}>
-				<DrawerTrigger className="bg-gray-100 py-2 px-2 overflow-hidden w-[120px] rounded-lg hover:bg-gray-800 transition-all hover:text-white ">
+				<DrawerTrigger className="bg-gray-100 py-2 px-2 overflow-hidden w-[120px] rounded-lg hover:bg-gray-800 transition-all hover:text-white text-muted-foreground ">
 					{data?.title}
 				</DrawerTrigger>
 				<DrawerContent className="grid place-items-center ">
