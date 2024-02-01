@@ -20,6 +20,7 @@ import {
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Textarea } from '@/components/ui/textarea'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -106,7 +107,7 @@ const AuthPage = () => {
 	}
 
 	return (
-		<div className="grid place-items-center mt-20">
+		<div className="grid grid-cols-1 place-items-center mt-20">
 			<div className="flex justify-center">
 				<div className="text-3xl  py-8  rounded-lg uppercase font-bold">
 					Welcome to Lucky Find 😀
@@ -145,6 +146,12 @@ const AuthPage = () => {
 								<CardDescription>이름과 비밀번호를 입력해주세요</CardDescription>
 							</CardHeader>
 							<CardContent className="space-y-2">
+								<Separator></Separator>
+								<div className="grid grid-cols-2 gap-3">
+									<Button variant={'outline'}> Git Hub</Button>
+									<Button variant={'outline'}>Google</Button>
+								</div>
+								<Separator></Separator>
 								<Form {...signInForm}>
 									<FormField
 										name="username"

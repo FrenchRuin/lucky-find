@@ -10,4 +10,6 @@ public interface NoticeService {
     NoticeDto createNotice(NoticeDto noticeDto);
 
     void deleteNotice(Long id);
+
+    NoticeDto updateNotice(Long id, NoticeDto noticeDto);
 }

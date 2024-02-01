@@ -3,6 +3,7 @@ import RecruitList from './_components/recruit-list'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Plus } from 'lucide-react'
 const RecruitPage = () => {
 	return (
 		<>
@@ -28,7 +29,12 @@ const RecruitPage = () => {
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="recruit">
-						<Button className="mb-2">공고 등록</Button>
+						<Button
+							variant={'ghost'}
+							className="mb-2 bg-slate-100 hover:bg-slate-300 transition-all"
+						>
+							<Plus />
+						</Button>
 						<div className="hidden items-start justify-center gap-6 rounded-lg  md:grid  grid-cols-3">
 							<RecruitList />
 						</div>

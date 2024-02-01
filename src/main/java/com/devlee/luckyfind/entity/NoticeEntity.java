@@ -3,11 +3,12 @@ package com.devlee.luckyfind.entity;
 import com.devlee.luckyfind.enums.NoticeCategory;
 import com.devlee.luckyfind.model.NoticeDto;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
 @Entity
 @Table(name = "notice")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NoticeEntity extends BaseEntity {
 
     @Id
@@ -31,17 +32,15 @@ public class NoticeEntity extends BaseEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    public NoticeEntity() {
 
+
+    @Builder
+    public NoticeEntity(Long id, String title, String content, String username, NoticeCategory category) {
+        this.id = id;
+        this.title = title;
+        this.category = category;
+        this.content = content;
+        this.username = username;
     }
-
-    public NoticeEntity(NoticeDto noticeDto) {
-        this.id = noticeDto.getId();
-        this.title = noticeDto.getTitle();
-        this.category = NoticeCategory.valueOf(String.valueOf(noticeDto.getCategory()).toUpperCase());
-        this.content = noticeDto.getContent();
-        this.username = noticeDto.getUsername();
-    }
-
 
 }

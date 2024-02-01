@@ -6,8 +6,6 @@ import com.devlee.luckyfind.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Logger;
-
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1")
@@ -23,7 +21,6 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<SignUpDto> signUp(@RequestBody SignUpDto signUpDto) {
         SignUpDto user = authService.signUp(signUpDto);
-
         return ResponseEntity.ok(user);
     }
 
